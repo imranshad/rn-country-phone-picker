@@ -170,7 +170,22 @@ export default class IntlPhoneInput extends React.Component {
 
     const countryData = await data;
 
-    const filteredCountry = countryData.filter((obj) => (obj[lang?.toLowerCase() || 'en']?.indexOf(value) > -1 || obj.dialCode.indexOf(value) > -1) || obj.code.indexOf(value.toUpperCase()) > -1);
+    const q = (value || '').trim();
+    if (!q) {
+      this.setState({ countryData });
+      return;
+    }
+
+    const langKey = (lang?.toLowerCase() || 'en');
+    const qLower = q.toLowerCase();
+    const qUpper = q.toUpperCase();
+
+    const filteredCountry = countryData.filter((obj) => {
+      const name = String(obj?.[langKey] || obj?.en || '').toLowerCase();
+      const dial = String(obj?.dialCode || '');
+      const code = String(obj?.code || '').toUpperCase();
+      return name.indexOf(qLower) > -1 || dial.indexOf(q) > -1 || code.indexOf(qUpper) > -1;
+    });
 
     this.setState({ countryData: filteredCountry });
   }
