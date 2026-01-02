@@ -35,5 +35,5 @@
     "type": "git",
     "url": "git+https://github.com/gnncl/React-Native-INTL-Phone-Input.git"
   },
-  "version": "0.0.6"
+  "version": "0.0.7-searchFix"
 }
